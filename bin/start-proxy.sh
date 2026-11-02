@@ -15,7 +15,10 @@ cfg = {"log": {"level": "warn"},
                  "headers": {"Host": q.get("host", "")}}}]}
 json.dump(cfg, open(os.path.join(os.path.dirname(os.path.abspath(__file__)) if '__file__' in dir() else "bin", "singbox.json"), "w"))
 PY
-if pgrep -f "sing-box run" >/dev/null; then exit 0; fi
+if pgrep -f "singbox run" >/dev/null; then exit 0; fi
 setsid "$DIR/singbox" run -c "$DIR/singbox.json" >/tmp/singbox.log 2>&1 < /dev/null &
-sleep 2
-pgrep -f "sing-box run" >/dev/null && echo "proxy up" || { echo "proxy FAILED"; exit 1; }
+for i in $(seq 1 15); do
+  curl -fsS --max-time 8 --socks5-hostname 127.0.0.1:11080 -o /dev/null https://bbs.55125.cn/ && { echo "proxy up"; exit 0; }
+  sleep 2
+done
+echo "proxy FAILED"; cat /tmp/singbox.log; exit 1
