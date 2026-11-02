@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>danscout · 彩票预测聚合</title>
+<style>
+:root{--b:#e2e2e2;--p:#0969da}
+*{box-sizing:border-box;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+body{margin:0;padding:16px;max-width:1200px;margin:auto;color:#24292f}
+h1{font-size:20px}h2{font-size:16px;border-left:4px solid var(--p);padding-left:8px;margin-top:24px}
+select,input{padding:6px;margin-right:8px;font-size:14px}
+.meta{color:#57606a;font-size:13px;margin:6px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--b);padding:5px 7px;text-align:left;vertical-align:top}
+th{background:#f6f8fa;white-space:nowrap}
+code{background:#f6f8fa;padding:1px 4px;border-radius:4px}
+.mono{font-family:ui-monospace,monospace}
+.card{border:1px solid var(--b);border-radius:8px;padding:12px;margin:10px 0}
+.bar{display:inline-block;background:var(--p);height:10px;border-radius:2px;vertical-align:middle;margin-right:4px}
+.num{display:inline-block;background:#f6f8fa;border:1px solid var(--b);border-radius:4px;padding:0 5px;margin:1px;font-family:ui-monospace,monospace;font-size:12px}
+</style>
+</head>
+<body>
+<h1>🎯 danscout 彩票预测聚合</h1>
+<div>
+  <select id="game"><option value="3d">福彩3D</option><option value="p3">排列三</option></select>
+  <select id="period"></select>
+  <span class="meta" id="meta"></span>
+</div>
+
+<div class="card"><h2>共识统计</h2><div id="consensus" class="mono"></div></div>
+<div class="card"><h2>各预测师观点</h2><table id="posts"><thead><tr>
+<th>预测师</th><th>独胆</th><th>双胆</th><th>三胆</th><th>五码</th><th>六码</th><th>杀码</th><th>和值</th><th>跨度</th><th>组选数</th><th>直选数</th></tr></thead><tbody></tbody></table></div>
+<div class="card"><h2>号码组合（直选去重）</h2><div id="zxlist"></div></div>
+
+<script src="app.js"></script>
+</body>
+</html>

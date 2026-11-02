@@ -1,0 +1,57 @@
+const $ = id => document.getElementById(id);
+const game = $("game"), period = $("period");
+
+async function jget(u){ const r = await fetch(u); return r.ok ? r.json() : null; }
+
+async function loadPeriods(){
+  const idx = await jget(`data/${game.value}/index.json`);
+  period.innerHTML = "";
+  (idx?.periods || []).forEach(p => {
+    const o = document.createElement("option");
+    o.value = o.textContent = p; period.appendChild(o);
+  });
+  load();
+}
+
+function bar(v, max){ const w = Math.round(v / max * 120); return `<span class="bar" style="width:${w}px"></span>${v}`; }
+
+async function load(){
+  const d = await jget(`data/${game.value}/${period.value}.json`);
+  if (!d) { $("meta").textContent = "无数据"; return; }
+  $("meta").textContent = `第${d.period}期 · ${d.post_count}帖 · 采集于 ${d.fetched_at}`;
+
+  const c = d.consensus || {};
+  const max = Math.max(1, ...Object.values(c.dan_cover || {}));
+  $("consensus").innerHTML =
+    `<div>独胆推荐：${Object.entries(c.dutan_freq||{}).map(([k,v])=>`${k}×${v}`).join("  ")||"—"}</div>` +
+    `<div style="margin-top:6px">胆码覆盖：${Object.entries(c.dan_cover||{}).map(([k,v])=>`${k} ${bar(v,max)}`).join("　")}</div>` +
+    `<div style="margin-top:6px">直选去重数：${c.zhixuan_count||0}</div>`;
+
+  const tb = document.querySelector("#posts tbody");
+  tb.innerHTML = "";
+  for (const p of d.posts){
+    const f = p.fields || {};
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td><a href="${p.url}" target="_blank">${p.predictor}</a><div class="meta">${p.author!==p.predictor?p.author:""} ${p.board}</div></td>` +
+      [f.dutan,f.shuangdan,f.sandan,f.ma5,f.ma6,f.shama,f.hezhi,f.kuadu]
+        .map(x=>`<td class="mono">${x||""}</td>`).join("") +
+      `<td>${(f.zuxuan||[]).length||""}</td><td>${(f.zhixuan||[]).length||""}</td>`;
+    tr.onclick = () => alert(p.title+"\n\n"+(p.text||"").slice(0,800));
+    tb.appendChild(tr);
+  }
+
+  const zx = {};
+  d.posts.forEach(p => (p.fields?.zhixuan||[]).forEach(n => zx[n]=(zx[n]||0)+1));
+  const hot = Object.entries(zx).filter(([,c])=>c>=3).sort((a,b)=>b[1]-a[1]);
+  const all = Object.keys(zx).sort();
+  $("zxlist").innerHTML =
+    `<div class="meta">被≥3帖推荐的（注后×次数）</div>` +
+    hot.map(([n,c])=>`<span class="num">${n}×${c}</span>`).join("") +
+    `<div class="meta" style="margin-top:10px">全部直选（${all.length}注去重）</div>` +
+    `<div class="mono" style="font-size:12px;line-height:1.9">${all.join(" ")}</div>`;
+}
+
+game.onchange = loadPeriods;
+period.onchange = load;
+loadPeriods();
+</script>

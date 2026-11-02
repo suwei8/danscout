@@ -1,0 +1,7 @@
+__pycache__/
+data/images/
+data/run_*.json
+logs/
+bin/singbox
+bin/singbox.json
+*.log

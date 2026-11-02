@@ -1,0 +1,11 @@
+{
+  "log": {"level": "warn"},
+  "inbounds": [{"type": "socks", "tag": "in", "listen": "127.0.0.1", "listen_port": 11080}],
+  "outbounds": [{
+    "type": "vless",
+    "server": "47.108.148.243",
+    "server_port": 5443,
+    "uuid": "a6fbe400-dfd2-446b-a42c-1b23f9906f78",
+    "transport": {"type": "ws", "path": "/", "headers": {"Host": "a.189.cn"}}
+  }]
+}

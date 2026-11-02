@@ -1,0 +1,14 @@
+{
+  "proxy": "socks5h://127.0.0.1:11080",
+  "proxied_hosts": ["bbs.55125.cn", "kjh.55123.cn", "m.55125.cn", "tuku.55125.cn", "www.55125.cn", "www.55123.cn", "pic.55123.cn", "img.55123.cn", "user.55123.cn"],
+  "resolve_map": {"bbs.17500.cn": "123.58.254.142"},
+  "boards_55125": [9, 82, 32, 8, 83],
+  "boards_55125_p3": [19, 35, 36],
+  "board_17500_fid": 6,
+  "kjh_url": "https://kjh.55123.cn/xq_sd.aspx",
+  "kjh_url_p3": "https://kjh.55123.cn/xq_p3.aspx",
+  "telegram": {},
+  "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+  "data_dir": "DATA_DIR_PLACEHOLDER",
+  "max_posts_per_board": 80
+}
