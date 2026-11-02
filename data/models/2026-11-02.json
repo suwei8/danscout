@@ -1,0 +1,63 @@
+{
+ "probed_at": "2026-11-02T22:21:00+00:00",
+ "results": [
+  {
+   "model": "opencode/beam-free",
+   "text_ok": false,
+   "text_s": 0.9,
+   "vision_ok": false,
+   "vision_s": 0.3
+  },
+  {
+   "model": "opencode/big-pickle",
+   "text_ok": false,
+   "text_s": 0.3,
+   "vision_ok": false,
+   "vision_s": 0.2
+  },
+  {
+   "model": "opencode/deepseek-v4.1-flash-free",
+   "text_ok": false,
+   "text_s": 0.2,
+   "vision_ok": false,
+   "vision_s": 0.5
+  },
+  {
+   "model": "opencode/flint-40b-free",
+   "text_ok": false,
+   "text_s": 0.2,
+   "vision_ok": false,
+   "vision_s": 0.2
+  },
+  {
+   "model": "opencode/glm-5.3-flash-free",
+   "text_ok": true,
+   "text_s": 0.3,
+   "vision_ok": false,
+   "vision_s": 0.3
+  },
+  {
+   "model": "opencode/mimo-v2.6-flash-free",
+   "text_ok": false,
+   "text_s": 0.2,
+   "vision_ok": false,
+   "vision_s": 0.2
+  },
+  {
+   "model": "opencode/nemotron-3.5-lightning-free",
+   "text_ok": true,
+   "text_s": 0.2,
+   "vision_ok": false,
+   "vision_s": 0.2
+  },
+  {
+   "model": "opencode/nemotron-3.5-super-vl-free",
+   "text_ok": true,
+   "text_s": 0.2,
+   "vision_ok": false,
+   "vision_s": 0.2
+  }
+ ],
+ "chosen_text": "opencode/nemotron-3.5-lightning-free",
+ "chosen_vision": null
+}
