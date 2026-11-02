@@ -2,7 +2,7 @@
 # write singbox config from VLESS_URL env + start sing-box on 127.0.0.1:11080
 set -e
 DIR="$(cd "$(dirname "$0")" && pwd)"
-python3 - <<'PY'
+DIR="$DIR" python3 - <<'PY'
 import json, os, re, urllib.parse
 u = os.environ["VLESS_URL"]
 m = re.match(r"vless://([^@]+)@([^:]+):(\d+)\?(.*)", u)
@@ -13,7 +13,7 @@ cfg = {"log": {"level": "warn"},
  "outbounds": [{"type": "vless", "server": host, "server_port": port, "uuid": uuid,
    "transport": {"type": q.get("type", "ws"), "path": q.get("path", "/"),
                  "headers": {"Host": q.get("host", "")}}}]}
-json.dump(cfg, open(os.path.join(os.path.dirname(os.path.abspath(__file__)) if '__file__' in dir() else "bin", "singbox.json"), "w"))
+json.dump(cfg, open(os.path.join(os.environ["DIR"], "singbox.json"), "w"))
 PY
 if pgrep -f "singbox run" >/dev/null; then exit 0; fi
 setsid "$DIR/singbox" run -c "$DIR/singbox.json" >/tmp/singbox.log 2>&1 < /dev/null &
