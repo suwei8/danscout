@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
-"""Probe free opencode models: text latency + real vision check; pick fastest usable.
+"""Probe free kilo models: text latency + real vision check; pick fastest usable.
 
-- Model list comes from `opencode models` (opencode/ prefix = free, no login).
-- Image-input capability comes from models.dev registry (authoritative);
-  if the registry is unreachable, every model is probed for vision anyway.
-- Verification uses tokens that cannot collide with model names/headers
-  (the old `"5" in output` check false-positived on "glm-5.3"/"nemotron-3.5").
+- Model list: `kilo models`, filtered to free ids (:free$/-free$//free$).
+- Image capability: `kilo models kilo --verbose` capability metadata
+  (authoritative); unknown models are still probed.
+- Verification uses tokens that cannot collide with model names/headers.
+- Message must precede -f: kilo's --file is an array flag that would
+  otherwise swallow the prompt as another file argument.
 - Never fails the workflow: LLM is not on the collection critical path.
 """
-import json, os, re, struct, subprocess, sys, tempfile, time, urllib.request, zlib, datetime
+import json, os, re, struct, subprocess, time, zlib, datetime
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(ROOT, "data", "models")
 ANSI = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]|[\x00-\x08\x0b-\x1f\x7f]")
+FREE = re.compile(r"(:free|-free|/free)$")
 
 TEXT_TOKEN = "ZQX9-READY"
 VISION_GLYPH = ["11111", "00010", "00100", "00100", "01000", "01000", "01000"]  # digit 7
@@ -49,10 +51,9 @@ def clean(s):
 
 
 def run(model, prompt, file=None, timeout=75):
-    cmd = ["opencode", "run", "--print-logs", "--log-level", "error", "-m", model]
+    cmd = ["kilo", "run", "-m", model, prompt]
     if file:
-        cmd += ["-f", file]
-    cmd.append(prompt)
+        cmd += ["-f", file]  # -f is an array flag: must come after the message
     t0 = time.time()
     try:
         p = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
@@ -62,25 +63,29 @@ def run(model, prompt, file=None, timeout=75):
 
 
 def models():
-    p = subprocess.run(["opencode", "models"], capture_output=True, text=True, timeout=30)
-    ids = [l.strip() for l in (p.stdout + p.stderr).splitlines()
-           if re.match(r"^[\w.-]+/[\w.-]+$", l.strip())]
-    return [i for i in ids if i.startswith("opencode/")], len(ids)
+    p = subprocess.run(["kilo", "models"], capture_output=True, text=True, timeout=60)
+    ids = [l.strip() for l in (p.stdout + p.stderr).splitlines() if l.strip().startswith("kilo/")]
+    return [i for i in ids if FREE.search(i)], len(ids)
 
 
 def capabilities(model_ids):
-    """models.dev registry -> {full_id: image_capable}. {} on failure."""
+    """kilo models --verbose -> {id: image_capable|None}. {} on failure."""
     try:
-        req = urllib.request.Request("https://models.dev/api.json",
-                                     headers={"User-Agent": "danscout-probe"})
-        d = json.load(urllib.request.urlopen(req, timeout=15))
-        ms = d.get("opencode", {}).get("models", {})
-        out = {}
-        for i in model_ids:
-            m = ms.get(i.split("/", 1)[1])
-            # None = not in registry -> unknown -> still probed
-            out[i] = None if m is None else "image" in (m.get("modalities") or {}).get("input", [])
-        return out
+        p = subprocess.run(["kilo", "models", "kilo", "--verbose"],
+                           capture_output=True, text=True, timeout=60)
+        caps = {}
+        for blk in re.split(r"\n(?=kilo/)", p.stdout):
+            m = re.match(r"kilo/(\S+)", blk.strip())
+            j = re.search(r"\{.*\}", blk, re.S)
+            if not (m and j):
+                continue
+            try:
+                d = json.loads(j.group(0))
+                inp = (d.get("capabilities") or {}).get("input") or {}
+                caps["kilo/" + m.group(1)] = bool(inp.get("image"))
+            except Exception:
+                caps["kilo/" + m.group(1)] = None
+        return caps
     except Exception:
         return {}
 
@@ -89,13 +94,13 @@ def main():
     ms, total_listed = models()
     caps = capabilities(ms)
     rows = []
-    with tempfile.TemporaryDirectory() as td:
-        img = os.path.join(td, "digit.png")
-        digit_png(img)
+    # image must live inside cwd: kilo rejects external_directory reads
+    img = os.path.join(ROOT, ".probe-digit.png")
+    digit_png(img)
+    try:
         for m in ms:
             t1, o1 = run(m, f"Output exactly this token and nothing else: {TEXT_TOKEN}")
-            ok_text = TEXT_TOKEN in o1
-            row = {"model": m, "text_ok": ok_text, "text_s": t1,
+            row = {"model": m, "text_ok": TEXT_TOKEN in o1, "text_s": t1,
                    "text_out": o1[:160],
                    "image_capable": caps.get(m)}
             if caps.get(m) is not False:  # image-capable or unknown -> probe
@@ -109,6 +114,8 @@ def main():
                 row["vision_s"] = None
             rows.append(row)
             time.sleep(1)
+    finally:
+        os.path.exists(img) and os.remove(img)
     txt_ok = sorted([r for r in rows if r["text_ok"]], key=lambda r: r["text_s"])
     vis_ok = sorted([r for r in rows if r.get("vision_ok")], key=lambda r: r["vision_s"])
     doc = {"probed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
