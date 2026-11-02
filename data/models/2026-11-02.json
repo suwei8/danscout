@@ -1,63 +1,95 @@
 {
- "probed_at": "2026-11-02T22:21:00+00:00",
+ "probed_at": "2026-11-02T22:50:09+00:00",
+ "listed_total": 37,
+ "probed": 9,
  "results": [
   {
    "model": "opencode/beam-free",
    "text_ok": false,
-   "text_s": 0.9,
+   "text_s": 0.8,
+   "text_out": "> build · beam-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+   "image_capable": false,
    "vision_ok": false,
-   "vision_s": 0.3
+   "vision_s": null
   },
   {
    "model": "opencode/big-pickle",
    "text_ok": false,
-   "text_s": 0.3,
+   "text_s": 0.6,
+   "text_out": "> build · big-pickle\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+   "image_capable": false,
    "vision_ok": false,
-   "vision_s": 0.2
+   "vision_s": null
   },
   {
    "model": "opencode/deepseek-v4.1-flash-free",
    "text_ok": false,
-   "text_s": 0.2,
+   "text_s": 0.5,
+   "text_out": "> build · deepseek-v4.1-flash-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+   "image_capable": true,
    "vision_ok": false,
-   "vision_s": 0.5
+   "vision_s": 0.6,
+   "vision_out": "> build · deepseek-v4.1-flash-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models."
   },
   {
    "model": "opencode/flint-40b-free",
    "text_ok": false,
-   "text_s": 0.2,
+   "text_s": 0.5,
+   "text_out": "> build · flint-40b-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+   "image_capable": false,
    "vision_ok": false,
-   "vision_s": 0.2
+   "vision_s": null
   },
   {
    "model": "opencode/glm-5.3-flash-free",
-   "text_ok": true,
-   "text_s": 0.3,
+   "text_ok": false,
+   "text_s": 0.6,
+   "text_out": "> build · glm-5.3-flash-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+   "image_capable": true,
    "vision_ok": false,
-   "vision_s": 0.3
+   "vision_s": 0.6,
+   "vision_out": "> build · glm-5.3-flash-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models."
   },
   {
    "model": "opencode/mimo-v2.6-flash-free",
    "text_ok": false,
-   "text_s": 0.2,
+   "text_s": 0.5,
+   "text_out": "> build · mimo-v2.6-flash-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+   "image_capable": true,
    "vision_ok": false,
-   "vision_s": 0.2
+   "vision_s": 0.6,
+   "vision_out": "> build · mimo-v2.6-flash-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models."
   },
   {
    "model": "opencode/nemotron-3.5-lightning-free",
-   "text_ok": true,
-   "text_s": 0.2,
+   "text_ok": false,
+   "text_s": 0.5,
+   "text_out": "> build · nemotron-3.5-lightning-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+   "image_capable": false,
    "vision_ok": false,
-   "vision_s": 0.2
+   "vision_s": null
   },
   {
    "model": "opencode/nemotron-3.5-super-vl-free",
-   "text_ok": true,
-   "text_s": 0.2,
+   "text_ok": false,
+   "text_s": 0.5,
+   "text_out": "> build · nemotron-3.5-super-vl-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+   "image_capable": true,
    "vision_ok": false,
-   "vision_s": 0.2
+   "vision_s": 0.6,
+   "vision_out": "> build · nemotron-3.5-super-vl-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models."
+  },
+  {
+   "model": "opencode/pulse-alpha-free",
+   "text_ok": false,
+   "text_s": 0.6,
+   "text_out": "> build · pulse-alpha-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models.",
+   "image_capable": true,
+   "vision_ok": false,
+   "vision_s": 0.6,
+   "vision_out": "> build · pulse-alpha-free\nError: Free usage limit reached. Connect a provider or subscribe to OpenCode Go to keep going, or switch models."
   }
  ],
- "chosen_text": "opencode/nemotron-3.5-lightning-free",
+ "chosen_text": null,
  "chosen_vision": null
 }
