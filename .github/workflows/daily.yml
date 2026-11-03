@@ -61,6 +61,15 @@ jobs:
           done
           git push
 
+      - name: deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_KEY: ${{ secrets.CF_API_KEY }}
+          CLOUDFLARE_EMAIL: ${{ secrets.CF_EMAIL }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        run: |
+          mkdir -p /tmp/site && cp index.html app.js /tmp/site/ && cp -r data /tmp/site/
+          npx -y wrangler@latest pages deploy /tmp/site --project-name danscout --branch main
+
       - name: TG alert on failure
         if: failure()
         run: |
