@@ -49,6 +49,9 @@ jobs:
       - name: collect + aggregate
         run: python3 aggregate.py
 
+      - name: fetch draw results
+        run: python3 fetch_results.py
+
       - name: commit data
         run: |
           git config user.name "danscout-bot"

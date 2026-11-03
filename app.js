@@ -3,8 +3,12 @@ const game = $("game"), period = $("period");
 
 async function jget(u){ const r = await fetch(u); return r.ok ? r.json() : null; }
 
+let results = {};
 async function loadPeriods(){
-  const idx = await jget(`data/${game.value}/index.json`);
+  const [idx, res] = await Promise.all([
+    jget(`data/${game.value}/index.json`),
+    jget(`data/${game.value}/results.json`)]);
+  results = res || {};
   period.innerHTML = "";
   (idx?.periods || []).forEach(p => {
     const o = document.createElement("option");
@@ -18,7 +22,10 @@ function bar(v, max){ const w = Math.round(v / max * 120); return `<span class="
 async function load(){
   const d = await jget(`data/${game.value}/${period.value}.json`);
   if (!d) { $("meta").textContent = "无数据"; return; }
-  $("meta").textContent = `第${d.period}期 · ${d.post_count}帖 · 采集于 ${d.fetched_at}`;
+  const kj = results[d.period];
+  $("meta").innerHTML = `第${d.period}期 · ${d.post_count}帖 · ` +
+    (kj ? `开奖 <b style="color:#d33;font-size:18px;letter-spacing:3px">${kj}</b>` : `<span style="color:#888">未开奖</span>`) +
+    ` · 采集于 ${d.fetched_at}`;
 
   const c = d.consensus || {};
   const max = Math.max(1, ...Object.values(c.dan_cover || {}));
