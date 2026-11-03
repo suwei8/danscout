@@ -34,8 +34,6 @@ async function loadPeriods(){
   load();
 }
 
-function bar(v, max){ const w = Math.round(v / max * 120); return `<span class="bar" style="width:${w}px"></span>${v}`; }
-
 async function load(){
   const d = await jget(`data/${game.value}/${period.value}.json`);
   if (!d) { $("meta").textContent = "无数据"; return; }
@@ -46,12 +44,7 @@ async function load(){
     (kj ? `开奖 <b style="color:#d33;font-size:18px;letter-spacing:3px">${kj}</b>` : `<span style="color:#888">未开奖</span>`) +
     ` · 采集于 ${d.fetched_at}`;
 
-  const c = d.consensus || {};
-  const max = Math.max(1, ...Object.values(c.dan_cover || {}));
-  $("consensus").innerHTML =
-    `<div>独胆推荐：${Object.entries(c.dutan_freq||{}).map(([k,v])=>`${k}×${v}`).join("  ")||"—"}</div>` +
-    `<div style="margin-top:6px">胆码覆盖：${Object.entries(c.dan_cover||{}).map(([k,v])=>`${k} ${bar(v,max)}`).join("　")}</div>` +
-    `<div style="margin-top:6px">直选去重数：${c.zhixuan_count||0}</div>`;
+
 
   const tb = document.querySelector("#posts tbody");
   tb.innerHTML = "";
