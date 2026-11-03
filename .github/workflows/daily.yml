@@ -46,6 +46,10 @@ jobs:
           git config user.email "bot@danscout.local"
           git add data/
           git commit -m "data: $(date -u +%F_%H%M) collection" || echo "nothing new"
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase || git rebase --abort || true
+          done
           git push
 
       - name: TG alert on failure
