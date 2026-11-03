@@ -1,0 +1,43 @@
+name: probe-models
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  TG_TOKEN: ${{ secrets.TG_TOKEN }}
+  TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+
+      - name: install kilo cli
+        run: npm i -g @kilocode/cli
+
+      - name: probe free models
+        run: python3 probe_models.py
+
+      - name: commit results
+        run: |
+          git config user.name "danscout-bot"
+          git config user.email "bot@danscout.local"
+          git add data/models/
+          git commit -m "probe: $(date -u +%F_%H%M) model evaluation" || echo "nothing new"
+          for i in 1 2 3; do
+            git push && exit 0
+            git pull --rebase || git rebase --abort || true
+          done
+          git push
+
+      - name: TG alert on failure
+        if: failure()
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            -d chat_id="${TG_CHAT_ID}" -d parse_mode=HTML \
+            --data-urlencode "text=<b>⚠️ danscout 模型探测失败</b> $(date -u +%F\ %H:%M) UTC，请查 workflow 日志"

@@ -5,6 +5,13 @@ on:
     - cron: "50 11 * * *"   # 北京 19:50
     - cron: "38 12 * * *"   # 北京 20:38
   workflow_dispatch:
+    inputs:
+      model_text:
+        description: "文本模型覆盖（留空用 vars.MODEL_TEXT）"
+        default: ""
+      model_vision:
+        description: "视觉模型覆盖（留空用 vars.MODEL_VISION）"
+        default: ""
 
 permissions:
   contents: write
@@ -13,6 +20,8 @@ env:
   VLESS_URL: ${{ secrets.VLESS_URL }}
   TG_TOKEN: ${{ secrets.TG_TOKEN }}
   TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+  MODEL_TEXT: ${{ inputs.model_text || vars.MODEL_TEXT || 'kilo/kilo-auto/free' }}
+  MODEL_VISION: ${{ inputs.model_vision || vars.MODEL_VISION || 'kilo/thinkingmachines/inkling:free' }}
 
 jobs:
   collect:
@@ -34,8 +43,8 @@ jobs:
       - name: start proxy
         run: bash bin/start-proxy.sh
 
-      - name: probe models
-        run: python3 probe_models.py
+      - name: show bound models
+        run: echo "MODEL_TEXT=$MODEL_TEXT | MODEL_VISION=$MODEL_VISION"
 
       - name: collect + aggregate
         run: python3 aggregate.py
