@@ -54,4 +54,3 @@ async function load(){
 game.onchange = loadPeriods;
 period.onchange = load;
 loadPeriods();
-</script>
