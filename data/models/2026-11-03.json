@@ -1,0 +1,157 @@
+{
+ "probed_at": "2026-11-03T00:23:15+00:00",
+ "listed_total": 325,
+ "probed": 16,
+ "results": [
+  {
+   "model": "kilo/cohere/north-mini-code:free",
+   "text_ok": true,
+   "text_s": 8.8,
+   "text_out": "ZQX9-READY\n\n\n> code · cohere/north-mini-code:free",
+   "image_capable": false,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/dots-studio/dots-3-note-preview:free",
+   "text_ok": true,
+   "text_s": 7.8,
+   "text_out": "ZQX9-READY\n\n\n> code · dots-studio/dots-3-note-preview:free",
+   "image_capable": true,
+   "vision_ok": true,
+   "vision_s": 7.8,
+   "vision_out": "IMGOK 7\n\n\n> code · dots-studio/dots-3-note-preview:free"
+  },
+  {
+   "model": "kilo/google/gemma-4-31b-it:free",
+   "text_ok": false,
+   "text_s": 40,
+   "text_out": "TIMEOUT",
+   "image_capable": true,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/inclusionai/ling-3.1-flash-1019-free",
+   "text_ok": true,
+   "text_s": 7.7,
+   "text_out": "ZQX9-READY\n\n\n> code · inclusionai/ling-3.1-flash-1019-free",
+   "image_capable": false,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/kilo-auto/free",
+   "text_ok": true,
+   "text_s": 7.6,
+   "text_out": "ZQX9-READY\n\n\n> code · kilo-auto/free",
+   "image_capable": false,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/liquid/lfm-2.5-2.6b:free",
+   "text_ok": false,
+   "text_s": 6.6,
+   "text_out": "ZXQ9-READY\n\n\n> code · liquid/lfm-2.5-2.6b:free",
+   "image_capable": false,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+   "text_ok": true,
+   "text_s": 8.0,
+   "text_out": "ZQX9-READY\n\n\n> code · nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+   "image_capable": true,
+   "vision_ok": false,
+   "vision_s": 26.1,
+   "vision_out": "IMGOK 1\n\n\n> code · nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free"
+  },
+  {
+   "model": "kilo/nvidia/nemotron-3-ultra-550b-a55b:free",
+   "text_ok": true,
+   "text_s": 7.5,
+   "text_out": "ZQX9-READY\n\n\n> code · nvidia/nemotron-3-ultra-550b-a55b:free",
+   "image_capable": false,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/nvidia/nemotron-3.5-lightning:free",
+   "text_ok": false,
+   "text_s": 40,
+   "text_out": "TIMEOUT",
+   "image_capable": false,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/nvidia/nemotron-3.5-super-vl:free",
+   "text_ok": true,
+   "text_s": 6.7,
+   "text_out": "ZQX9-READY\n\n\n> code · nvidia/nemotron-3.5-super-vl:free",
+   "image_capable": true,
+   "vision_ok": true,
+   "vision_s": 23.0,
+   "vision_out": "IMGOK 7\n\n\n> code · nvidia/nemotron-3.5-super-vl:free"
+  },
+  {
+   "model": "kilo/openrouter/free",
+   "text_ok": true,
+   "text_s": 10.3,
+   "text_out": "ZQX9-READY\n\n\n> code · openrouter/free",
+   "image_capable": true,
+   "vision_ok": true,
+   "vision_s": 8.4,
+   "vision_out": "IMGOK 7\n\n\n> code · openrouter/free"
+  },
+  {
+   "model": "kilo/recursive/flint-v1.0:free",
+   "text_ok": false,
+   "text_s": 40,
+   "text_out": "TIMEOUT",
+   "image_capable": false,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/reflection/beam-free",
+   "text_ok": true,
+   "text_s": 7.7,
+   "text_out": "ZQX9-READY\n\n\n> code · reflection/beam-free",
+   "image_capable": false,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/thinkingmachines/inkling-small:free",
+   "text_ok": false,
+   "text_s": 40,
+   "text_out": "TIMEOUT",
+   "image_capable": true,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/thinkingmachines/inkling:free",
+   "text_ok": false,
+   "text_s": 40,
+   "text_out": "TIMEOUT",
+   "image_capable": true,
+   "vision_ok": false,
+   "vision_s": null
+  },
+  {
+   "model": "kilo/xingchen-agi/xing4.0-29b-a4b:free",
+   "text_ok": true,
+   "text_s": 35.5,
+   "text_out": "ZQX9-READY\n\n\n> code · xingchen-agi/xing4.0-29b-a4b:free",
+   "image_capable": false,
+   "vision_ok": false,
+   "vision_s": null
+  }
+ ],
+ "chosen_text": "kilo/nvidia/nemotron-3.5-super-vl:free",
+ "chosen_vision": "kilo/dots-studio/dots-3-note-preview:free"
+}
