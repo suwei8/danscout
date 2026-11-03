@@ -50,7 +50,7 @@ def clean(s):
     return ANSI.sub("", s or "").strip()
 
 
-def run(model, prompt, file=None, timeout=75):
+def run(model, prompt, file=None, timeout=40):
     cmd = ["kilo", "run", "-m", model, prompt]
     if file:
         cmd += ["-f", file]  # -f is an array flag: must come after the message
@@ -103,7 +103,8 @@ def main():
             row = {"model": m, "text_ok": TEXT_TOKEN in o1, "text_s": t1,
                    "text_out": o1[:160],
                    "image_capable": caps.get(m)}
-            if caps.get(m) is not False:  # image-capable or unknown -> probe
+            # dead/slow models excluded early: no vision probe if text failed
+            if row["text_ok"] and caps.get(m) is not False:
                 t2, o2 = run(m, "The attached image shows a single digit. "
                                 "Reply with exactly: IMGOK <digit>", file=img)
                 row["vision_ok"] = bool(re.search(r"IMGOK\D*7\b", o2))
